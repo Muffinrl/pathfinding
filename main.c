@@ -20,7 +20,6 @@ Map coords[12];
 
 int main() {
     int i;
-    fillCoords();
     initialiseArrays();
     printGrid();
 }
@@ -44,7 +43,13 @@ void initialiseArrays() {
     route[0] = 10;
     route[1] = 12;
 
+    /* 
+        fillCoords() should always run before fillGrid(),
+        unless you know exactly what you're doing.
+    */
+    fillCoords();
     fillGrid();
+    
 }
 
 /*
