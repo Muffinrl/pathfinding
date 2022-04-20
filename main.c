@@ -136,7 +136,7 @@ void fillGrid() {
     }
 
     for (i = 0; i < 12; i++) {
-        grid[coords[i].col][coords[i].row] = i + 1;
+        grid[coords[i].row][coords[i].col] = i + 1;
     }
 }
 
