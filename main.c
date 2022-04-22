@@ -6,21 +6,41 @@
 void initialiseArrays();
 void fillCoords();
 void fillGrid();
+void fillJunc();
 void printGrid();
+void printJunc();
 
 /* 
     blocked[] is the (hardcoded example) input of blocked rows.
-    route[] is a 2 element array containing the two stations which a route must be calculated between.    
+    route[] is a 2 element array containing the two station which a route must be calculated between.  
+    grid[] format is [ROW,COLUMN].  
 */
 char blocked[7];
 int route[2], grid[13][13];
 
 /* Array containing the coordinates of the start/end points as row,col valuepairs */
-Map coords[12];
+Map station[12];
+Map junc[25];
+
 
 int main() {
-    int i;
+    int i, j;
     initialiseArrays();
+    fillJunc();
+
+    for(i = 1; i <= blocked[0] * 3 + 1; i+=3) {
+        for(j = 0; j < 25; j++) {
+            if ((junc[j].row - 2)/2 == (int)blocked[i]-'0' && (junc[j].col - 2)/2 == (int)blocked[i+1]-'0') {
+                if(blocked[i+2] == 'e') {
+                    grid[junc[j].row][junc[j].col+1] = -1;
+                }
+                else if(blocked[i+2] == 's') {
+                    grid[junc[j].row+1][junc[j].col] = -1;
+                }
+            }
+        }
+    }
+
     printGrid();
 }
 
@@ -53,65 +73,83 @@ void initialiseArrays() {
 }
 
 /*
-    Fills the Map coords with xy value pairs describing the coordinates of different stations.
+    Fills the Map coords with xy value pairs describing the coordinates of different station.
 */
 void fillCoords() {
-/*  Alternative method, doesn't assign the "correct" index to every valuepair sadly.
-    int i,j,k;
-    k = 0;
+    /*  Alternative method, doesn't assign the "correct" index to every valuepair sadly.
+        int i,j,k;
+        k = 0;
 
-    for(i = 0; i < 13; i++) {
-        for(j = 0; j < 13; j++) {
-            if(((i == 4 || i == 6 || i == 8) && (j == 12 || j == 0 )) || ((j == 4 || j == 6 || j ==8) && (i == 12 || i == 0))){
-                coords[k].col = j;
-                coords[k].row = i;
-                //printf("\nrow: %d, col: %d", coords[k].row, coords[k].col);
-                k++;
+        for(i = 0; i < 13; i++) {
+            for(j = 0; j < 13; j++) {
+                if(((i == 4 || i == 6 || i == 8) && (j == 12 || j == 0 )) || ((j == 4 || j == 6 || j ==8) && (i == 12 || i == 0))){
+                    coords[k].col = j;
+                    coords[k].row = i;
+                    //printf("\nrow: %d, col: %d", coords[k].row, coords[k].col);
+                    k++;
+                }
             }
         }
-    }
-*/
+    */
 
-/* 
-    Hard coded start/end point map.
-    Desperate measure, might "fix" later.
-*/
-coords[0].row = 12;
-coords[0].col = 4;
+    /* 
+        Hard coded start/end point map.
+        Desperate measure, might "fix" later.
+    */
+    station[0].row = 12;
+    station[0].col = 4;
 
-coords[1].row = 12;
-coords[1].col = 6;
+    station[1].row = 12;
+    station[1].col = 6;
 
-coords[2].row = 12;
-coords[2].col = 8;
+    station[2].row = 12;
+    station[2].col = 8;
 
-coords[3].row = 8;
-coords[3].col = 12;
+    station[3].row = 8;
+    station[3].col = 12;
 
-coords[4].row = 6;
-coords[4].col = 12;
+    station[4].row = 6;
+    station[4].col = 12;
 
-coords[5].row = 4;
-coords[5].col = 12;
+    station[5].row = 4;
+    station[5].col = 12;
 
-coords[6].row = 0;
-coords[6].col = 8;
+    station[6].row = 0;
+    station[6].col = 8;
 
-coords[7].row = 0;
-coords[7].col = 6;
+    station[7].row = 0;
+    station[7].col = 6;
 
-coords[8].row = 0;
-coords[8].col = 4;
+    station[8].row = 0;
+    station[8].col = 4;
 
-coords[9].row = 4;
-coords[9].col = 0;
+    station[9].row = 4;
+    station[9].col = 0;
 
-coords[10].row = 6;
-coords[10].col = 0;
+    station[10].row = 6;
+    station[10].col = 0;
 
-coords[11].row = 8;
-coords[11].col = 0;
+    station[11].row = 8;
+    station[11].col = 0;
 }
+
+/*
+    Fills the array containing all the junction coordinates with respect to the main grid.
+*/
+void fillJunc() {
+    int row,col,i;
+
+    i = 0;
+
+    for(row = 2; row <= 10; row+=2) {
+        for(col = 2; col <= 10; col+=2) {
+            junc[i].col = col;
+            junc[i].row = row;
+            i++;
+        }
+    }
+}
+
 
 /* 
     Describes the default grid, with 0's on the following values:
@@ -141,9 +179,11 @@ void fillGrid() {
     }
 
     for (i = 0; i < 12; i++) {
-        grid[coords[i].row][coords[i].col] = i + 1;
+        grid[station[i].row][station[i].col] = i + 1;
     }
 }
+
+
 
 /* Prints the grid array to the console as a 13x13 grid, with blue 0 values and red -1 values.*/
 void printGrid() {
@@ -166,4 +206,11 @@ void printGrid() {
 
     /* Reset console colour value */
     printf("\033[0m");
+}
+
+void printJunc() {
+    int i;
+    for(i = 0; i < 25; i++) {
+        printf("Junction(r,c) %d: (%2d,%2d) \n", i, junc[i].row,junc[i].col);
+    }
 }
