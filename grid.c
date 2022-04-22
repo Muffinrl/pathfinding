@@ -31,18 +31,6 @@ Map junc[25];
 
 void initialiseArrays() {
     int i, j;
-
-    // blocked[0] = '2';
-    // blocked[1] = '2';
-    // blocked[2] = '0';
-    // blocked[3] = 'e';
-    // blocked[4] = '1';
-    // blocked[5] = '1';
-    // blocked[6] = 's';
-
-    route[0] = 10;
-    route[1] = 12;
-
     /* 
         fillCoords() should always run before fillGrid(),
         unless you know exactly what you're doing.
@@ -220,4 +208,19 @@ void printJunc() {
     for(i = 0; i < 25; i++) {
         printf("Junction(r,c) %d: (%2d,%2d) \n", i, junc[i].row,junc[i].col);
     }
+}
+
+
+/*
+    Returns a value from grid[][]
+*/
+int getGrid(int row, int col) {
+    return grid[row][col];
+}
+
+/*
+    Sets a value in grid[][] at (row,col)
+*/
+void setGrid(int row, int col, int value) {
+    grid[row][col] = value;
 }
