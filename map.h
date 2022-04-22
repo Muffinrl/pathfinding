@@ -3,3 +3,5 @@ typedef struct Map {
     int col;
 }
 Map;
+
+int isMapEqual(Map a, Map b);

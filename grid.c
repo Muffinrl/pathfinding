@@ -172,13 +172,37 @@ void fillGrid() {
             }
         }
     }
-
-    for (i = 0; i < 12; i++) {
-        grid[station[i].row][station[i].col] = i + 1;
-    }
+    // Uncomment to add stations
+    // for (i = 0; i < 12; i++) {
+    //     grid[station[i].row][station[i].col] = i + 1;
+    // }
 }
 
+/*
+    Returns a value from grid[][]
+*/
+int getGrid(int row, int col) {
+    return grid[row][col];
+}
 
+/*
+    Sets a value in grid[][] at (row,col)
+*/
+void setGrid(int row, int col, int value) {
+    grid[row][col] = value;
+}
+
+/*
+    Gets the coordinate values of a station
+    The value passed for isCol determines which coordinate is returned.
+*/
+int getStationValue(int i, int isCol) {
+    if (isCol == 1) {
+        return station[i].col;
+    } else {
+        return station[i].row;
+    }
+}
 
 /* Prints the grid array to the console as a 13x13 grid, with blue 0 values and red -1 values.*/
 void printGrid() {
@@ -208,19 +232,4 @@ void printJunc() {
     for(i = 0; i < 25; i++) {
         printf("Junction(r,c) %d: (%2d,%2d) \n", i, junc[i].row,junc[i].col);
     }
-}
-
-
-/*
-    Returns a value from grid[][]
-*/
-int getGrid(int row, int col) {
-    return grid[row][col];
-}
-
-/*
-    Sets a value in grid[][] at (row,col)
-*/
-void setGrid(int row, int col, int value) {
-    grid[row][col] = value;
 }
