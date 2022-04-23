@@ -204,6 +204,16 @@ int getStationValue(int i, int isCol) {
     }
 }
 
+/*
+    Returns [row,col]
+*/
+int* getJunction(int i) {
+    int* ret = calloc(2, sizeof(int));
+    *ret = junc[i].row;
+    *(ret+1) = junc[i].col;
+    return ret;
+}
+
 /* Prints the grid array to the console as a 13x13 grid, with blue 0 values and red -1 values.*/
 void printGrid() {
     int i,j;
