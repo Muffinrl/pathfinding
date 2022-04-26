@@ -54,12 +54,12 @@ void setBlocked() {
                     grid[junc[j].row][junc[j].col+1] = -1;
 
                     blockedEdges[(i-1)/3].col = junc[j].col+1;
-                    blockedEdges[(i-1)/3].row = junc[j].row+1;
+                    blockedEdges[(i-1)/3].row = junc[j].row;
                 }
                 else if(blocked[i+2] == 's') {
                     grid[junc[j].row+1][junc[j].col] = -1;
 
-                    blockedEdges[(i-1)/3].col = junc[j].col+1;
+                    blockedEdges[(i-1)/3].col = junc[j].col;
                     blockedEdges[(i-1)/3].row = junc[j].row+1;
                 }
             }
