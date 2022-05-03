@@ -1,4 +1,4 @@
-typedef struct Map {
+typedef struct{
     int row;
     int col;
 }
